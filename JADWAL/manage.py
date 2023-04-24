@@ -6,11 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-<<<<<<<< HEAD:INVENTARIS BARANG/manage.py
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'inventaris.settings')
-========
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pegawai.settings')
->>>>>>>> df9f4ec4f1ed355c978d2f686cbaae650928adc3:PEGAWAI/manage.py
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sidang.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
