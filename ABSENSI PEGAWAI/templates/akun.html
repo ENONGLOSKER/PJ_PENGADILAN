@@ -1,0 +1,153 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="{%static 'css/bootstrap.css'%}" rel="stylesheet">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <title>AbsensiOnline | Absen </title>
+  </head>
+  <body>
+    <!-- header -->
+    <div class="px-4 py-5 mb-5 text-center" style="background-image: linear-gradient(to right,  rgb(11, 11, 138),rgb(63, 63, 216));">
+      <img class="d-block mx-auto mb-4" src="{%static '/img/logo_pa.png'%}" alt="" width="90" height="110">
+    
+      <h1 class="display-5 fw-bold text-white">Absensi Karyawan Online</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4 fw-bold text-white">PENGADILAN AGAM SELONG KELAS I B</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a href="{%url 'absen:absen'%}" class="btn btn-primary btn-lg px-4 gap-3">Absen</a>
+          <a href="{%url 'absen:logout'%}" class="btn btn-outline-secondary btn-lg px-4">Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- isi -->
+    <div class="container py-1 text-center container">
+      <!-- sweet alert -->
+      {%for message in messages%}
+      {% if message.tags == 'success' %}                     
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>                                            
+      <script>
+          var m="{{message}}";
+          swal("Absen",m,"success");
+      </script>
+      {% endif %}
+      {%endfor%}
+
+      <h1 class="fw-light mb-3">Riwayat Absensi</h1> 
+      <!-- jumlah -->
+      <div class="container mt-3">
+        <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3  bg-primary">
+                <h4 class="my-0 fw-bold text-white">Hadir</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{jlh_hadir}}<small class="text-muted fw-light">x</small></h1>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3  bg-warning">
+                <h4 class="my-0 fw-bold text-white">PULANG</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{jlh_pulang}}<small class="text-muted fw-light">x</small></h1>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3  bg-success">
+                <h4 class="my-0 fw-bold text-white">IZIN</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{jlh_izin}}<small class="text-muted fw-light">x</small></h1>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3  bg-danger">
+                <h4 class="my-0 fw-bold text-white">CUTI</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{jlh_cuti}}<small class="text-muted fw-light">x</small></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- tabel -->
+      <div class="container mt-4">
+        <table class="table table-bordered align-middle able-responsive">
+          <thead class="table-dark">
+            <tr>
+              <th>NO</th>
+              <th>TANGGAL</th>
+              <th>WAKTU</th>
+              <th>STATUS</th>
+              <!-- <th>KETERANGAN</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            {%for data in datas.object_list%}
+            <tr>
+              <td>{{forloop.counter}}</td>                      
+              <td>{{data.tgl}}</td>
+              <td>{{data.waktu}}</td>
+              <td>{{data.status}}</td>
+              <!-- <td class="text-start">{{data.ket}}</td> -->
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        <!-- paginations -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {%for data in datas.paginator.page_range%}
+              {%if datas.number == data %}
+              <li class="page-item active">
+                <a class="page-link" href="{%url 'akun'%}?page={{data}}">{{data}}</a>
+              </li>
+              {%else%}
+              <li class="page-item">
+                <a class="page-link" href="{%url 'akun'%}?page={{data}}">{{data}}</a>
+              </li>
+              {%endif%}
+            {%endfor%}
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 border-top text-white" style="background-image: linear-gradient(to right,  rgb(11, 11, 138),rgb(3, 3, 83));">
+      <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+          <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+        <span class="text-muted">© 2023 Elcoder, Inc</span>
+      </div>
+  
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex me-5 ">
+        <li class="ms-3"><a class="text-muted" href="#"><i width="24" height="24" class="bi bi-twitter"></i></a></li>
+        <li class="ms-3"><a class="text-muted" href="#"><i width="24" height="24" class="bi bi-facebook"></i></a></li>
+        <li class="ms-3"><a class="text-muted" href="#"><i width="24" height="24" class="bi bi-instagram"></i></a></li>
+      </ul>
+    </footer> 
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>
