@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # LANGKAH NSTALASI
 -------------------------------------------------------
 buka aplikasi visual studio code
@@ -70,4 +70,3 @@ password = pegawai123
 
 - untuk login sebagai admin gunakan akun username = admin dan password = admin123
 - untuk melihat data user sementara gunakan user1 | pengguna1
->>>>>>> df9f4ec4f1ed355c978d2f686cbaae650928adc3
