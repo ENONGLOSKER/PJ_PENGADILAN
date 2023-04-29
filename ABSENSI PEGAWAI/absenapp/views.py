@@ -9,32 +9,59 @@ from django.views.decorators.csrf import csrf_exempt
 
 # @login_required() #fungsi ini bisa diakses setelah login berhasil
 @csrf_exempt
-def absen(request):
+# def absen(request):
 
-    if request.user.is_active:
-        data = absenModel.objects.all() #ambil semua data di tabel absenmodel
-        ab = absenForm() 
+    # if request.user.is_active:
+        
+    #     ab = absenForm(request.POST or None) 
 
-        pgaw = profil.objects.get(nama=request.user)
+    #     if request.method == 'POST':
+    #         pgaw = profil.objects.get(nama=request.user)
+    #         absenModel.objects.create(
+    #             pegawai = pgaw,
+    #             status  = request.POST.get('status'),
+    #             ket     = request.POST.get('ket'),
+    #             foto    = request.POST.get('foto'),
+    #         )
+    #         messages.success(request,"Selamat Absen Berhasil")
+    #         return redirect('akun')
+    # else:
+    #     return redirect('absen:login')
+    
+    # data = absenModel.objects.all() #ambil semua data di tabel absenmodel
 
-        if request.method == 'POST':
-            absenModel.objects.create(
-                pegawai = pgaw,
-                status  = request.POST.get('status'),
-                ket     = request.POST.get('ket'),
-            )
-            messages.success(request,"Selamat Absen Berhasil")
-            return redirect('akun')
-    else:
-        return redirect('absen:login')
-
-    #lempar data yang sudah didapat ke templates
+    # #lempar data yang sudah didapat ke templates
   
+    # context = { 
+    #     'profile':ab,
+    #     'datas':data,
+    # }
+    # return render(request, 'absen.html',context)
+
+def absen(request):
+    if not request.user.is_authenticated:
+        return redirect('absen:login')
+    ab = absenForm() 
+    if request.method == 'POST':
+        # create absenForm instance
+        ab = absenForm(request.POST, request.FILES)
+        if ab.is_valid():
+            pgaw = profil.objects.get(nama=request.user)
+            absen = ab.save(commit=False)
+            absen.pegawai = pgaw
+            absen.save()
+            messages.success(request, 'Selamat Absen Berhasil')
+            return redirect('akun')
+            
+    data = absenModel.objects.all() #ambil semua data di tabel AbsenModel
+
+    #lempar data yang sudah didapat ke template
     context = { 
-        'profile':ab,
-        'datas':data,
+        'profile': ab,
+        'datas': data,
     }
-    return render(request, 'absen.html',context)
+    return render(request, 'absen.html', context)
+
 @csrf_exempt
 def profile(request):
 

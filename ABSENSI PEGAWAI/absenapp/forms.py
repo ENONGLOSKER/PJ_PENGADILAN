@@ -45,13 +45,10 @@ class absenForm(forms.ModelForm):
         fields = [
                 # 'pegawai',
                 'status',
-                'ket',      
+                'ket', 
+                'foto'     
             ]
         widgets={
-            # 'pegawai':forms.TextInput(
-            #     attrs={
-            #         'class':'form-control',}
-            #     ),
             'status':forms.Select(
                 attrs={
                     'class':'form-control',}
@@ -60,5 +57,11 @@ class absenForm(forms.ModelForm):
                 attrs={
                     'class':'form-control',
                     'style':'height: 80px;',}
+                ),
+            'foto':forms.ClearableFileInput(
+                attrs={
+                    'class':'form-control',
+                    'type':'file'
+                    }
                 ),
             }

@@ -3,6 +3,8 @@ from . models import absenModel,profil
 from django.contrib import admin
 from .models import profil, absenModel
 from django.http import HttpResponse, HttpResponseRedirect 
+from django.utils.html import format_html
+
 
 # Tambahkan action untuk mencetak data absenModel
 def print_absen_data(modeladmin, request, queryset):
@@ -27,27 +29,18 @@ class ProfilAdmin(admin.ModelAdmin):
 
 class AbsenModelAdmin(admin.ModelAdmin):
     actions = [print_absen_data]
-    readonly_fields = ['tgl','waktu'] #untuk menmpilkan kolom yang tersembunyi
-    list_display = ('pegawai','status','ket','waktu','tgl') #untuk menu pencarian berdasarkan kategori
-    list_filter = ['pegawai','status','tgl','waktu'] #untuk membuat tampilkan tabel pada admin
+    readonly_fields = ['tgl','waktu'] # menambahkan field image_tag sebagai read-only field
+    list_display = ('pegawai','status','ket','waktu','tgl','foto_preview') 
+    list_filter = ['pegawai','status','tgl','waktu']
 
-admin.site.register(profil, ProfilAdmin)
+    def foto_preview(self, obj):
+        return format_html('<img src="{}" height="50" />'.format(obj.foto.url))
+
+    foto_preview.short_description = 'Foto Preview'
+
 admin.site.register(absenModel, AbsenModelAdmin)
+admin.site.register(profil, ProfilAdmin)
 
-
-
-# class absenAdmin(admin.ModelAdmin):
-#     readonly_fields = ['tgl','waktu'] #untuk menmpilkan kolom yang tersembunyi
-#     list_display = ('pegawai','status','ket','waktu','tgl') #untuk menu pencarian berdasarkan kategori
-#     list_filter = ['pegawai','status','tgl','waktu'] #untuk membuat tampilkan tabel pada admin
-
-# class profilAdmin(admin.ModelAdmin):
-#     list_display = ('nama','nip','jenisK','jabatan','alamat')
-#     list_filter = ['nama','nip','jenisK','jabatan','alamat']
-
-# #untuk mendaptarkan tabel ke admin
-# admin.site.register(absenModel,absenAdmin)
-# admin.site.register(profil,profilAdmin)
 
 # untuk merubah/edit nama header/judul panel admin
 admin.site.site_header= 'Absensi Online'

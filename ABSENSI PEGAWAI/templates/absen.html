@@ -44,7 +44,7 @@
                                   {%endif%}
                                   {%endfor%}  
                                   
-                                  <form class="my-3" method="POST" >
+                                  <form class="my-3" method="POST" enctype="multipart/form-data">
                                       {%csrf_token%}                                       
                                         <div class="row">
                                         <div class="col-12 mb-4">
@@ -55,7 +55,6 @@
                                         </div>                         
                                         </div>
 
-                                        <!-- Email input -->
                                         {%for form in profile %}
                                         <div class="form-group form-outline mb-4 text-start">
                                             {{form.label}}
@@ -71,9 +70,9 @@
                                         <!-- Register buttons -->
                                         <div class="text-center">
                                         <p>Kembali ke halaman<a href="{%url 'absen:profile'%}" class="text-primary">Profile</a></p>
-                                        <a href="/" class="text-dark" style="text-decoration: none;">Kembali ke Halaman <span class="fw-bold">Home</span></a>
+                                        <a href="{%url 'akun'%}" class="text-dark" style="text-decoration: none;">Kembali ke Halaman <span class="fw-bold">Akun</span></a>
                                         </div>
-                                    </form>
+                                  </form>
                                 </div>
                             </div>
                         </div>

@@ -4,7 +4,7 @@ from datetime import datetime
 
 # tabel untuk profile karyawan
 class profil(models.Model):
-    nama        =models.OneToOneField(User, on_delete=models.CASCADE, related_name='profil')
+    nama        =models.ForeignKey(User, on_delete=models.CASCADE, related_name='profil')
     nip         =models.CharField(max_length=50, default='-')
     jk =(
         ('Laki-Laki','L'),
@@ -32,6 +32,7 @@ class absenModel(models.Model):
     )
     status      =models.CharField(choices=absen, max_length=50, default='HADIR')
     ket         =models.TextField(null=True, blank=True) 
+    foto        =models.ImageField(upload_to ='Pegawai',blank=True, null=True)
 
     def __str__(self):
         return "{}".format(self.pegawai)
