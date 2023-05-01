@@ -139,7 +139,7 @@ JAZZMIN_SETTINGS = {
     "site_header": "Absensi Online",
     "site_icon": "img/logo.png",
     "welcome_sign": "Absensi Online, Selamat Datang!",
-     "user_avatar": "img/el.png",
+    "user_avatar": "img/el.png",
 }
 # alert
 MESSAGE_TAGS = {
